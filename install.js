@@ -20,7 +20,7 @@ var npmconf = require('npmconf')
 var util = require('util')
 
 var libPath = path.join(__dirname, 'lib', 'bin', 'iedriver')
-var downloadUrl = 'http://chromedriver.googlecode.com/files/IEDriverServer_'
+var downloadUrl = 'http://selenium.googlecode.com/files/IEDriverServer_'
 
 if (process.platform === 'win32') {
   downloadUrl += 'Win32_2.33.0.zip'
@@ -66,7 +66,7 @@ npmconf.load(function(err, conf) {
     return copyIntoPlace(tmpPath, libPath)
   })
   .then(function () {
-    return fixFilePermissions()
+    return fixFilePermissions(tmpPath, libPath)
   })
   .then(function () {
     console.log('Done. IEDriver binary available at', helper.path)
@@ -102,11 +102,9 @@ function requestBinary(requestOptions, filePath) {
   var count = 0
   var notifiedCount = 0
   var outFile = fs.openSync(filePath, 'w')
-
   var client = http.get(requestOptions, function (response) {
     var status = response.statusCode
     console.log('Receiving...')
-
     if (status === 200) {
       response.addListener('data',   function (data) {
         fs.writeSync(outFile, data, 0, data.length, null)
@@ -170,12 +168,14 @@ function copyIntoPlace(tmpPath, targetPath) {
   var files = fs.readdirSync(tmpPath)
   for (var i = 0; i < files.length; i++) {
     var file = path.join(tmpPath, files[i])
+    file = file;
     if (fs.statSync(file).isFile() && file.search('zip') === -1) {
-      console.log('Renaming extracted folder', file, '->', targetPath)
-      if (process.platform === 'win32') {
-        targetPath = targetPath + '.exe';
+      targetPath = targetPath.replace('iedriver', 'IEDriverServer');
+      try {
+        ncp(file, targetPath, deferred.makeNodeResolver())
+      } catch (e) {
+
       }
-      ncp(file, targetPath, deferred.makeNodeResolver())
       break
     }
   }
@@ -184,16 +184,8 @@ function copyIntoPlace(tmpPath, targetPath) {
 
 
 
-function fixFilePermissions() {
-  // Check that the binary is user-executable and fix it if it isn't (problems with unzip library)
-  if (process.platform != 'win32') {
-    var stat = fs.statSync(helper.path)
-    // 64 == 0100 (no octal literal in strict mode)
-    if (!(stat.mode & 64)) {
-      console.log('Fixing file permissions')
-      fs.chmodSync(helper.path, '755')
-    }
-  }
+function fixFilePermissions(tmpPath, libPath) {
+  fs.renameSync(libPath.replace('iedriver', 'IEDriverServer'), libPath.replace('iedriver', 'IEDriverServer.exe'))
 }
 
 
