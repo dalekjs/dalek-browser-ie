@@ -2,6 +2,7 @@
   "name": "dalek-browser-ie",
   "version": "0.0.1",
   "description": "Internet Explorer bindings for DalekJS",
+  "homepage": "http://dalekjs.com",
   "main": "./index.js",
   "os" : ["win32"],
   "repository": {
