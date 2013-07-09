@@ -27,7 +27,7 @@
 // ext. libs
 var Q = require('q');
 var spawn = require('child_process').spawn;
-var nwin = require('node-windows');
+var exec = require('child_process').exec;
 
 // int. libs
 var iedriver = require('./lib/iedriver');
@@ -145,20 +145,77 @@ module.exports = {
 
   kill: function () {
     // get a list of all running processes
-    nwin.list(function(svc){
+    this._list(function(svc){
       // filter out the browser process
       svc.forEach(function (item, idx) {
         Object.keys(item).forEach(function (key) {
           if(svc[idx][key] === 'iexplore.exe') {
             // kill the browser process
-            nwin.kill(svc[idx].PID);
+            this._kill(svc[idx].PID);
           }
-        });
+        }.bind(this));
       });
     },true);
 
     // kill the driver process
     this.spawned.kill('SIGTERM');
     return this;
+  },
+
+  /**
+   * @method list
+   * @member nodewindows
+   * List the processes running on the server.
+   * @param {Function} callback
+   * Receives the process object as the only callback argument
+   * @param {Boolean} [verbose=false]
+   */
+  _list: function(callback,verbose){
+    verbose = typeof verbose === 'boolean' ? verbose : false;
+    exec('tasklist /FO CSV'+(verbose === true?' /V':''),function(err, stdout){
+      var p = stdout.split('\r\n');
+      var proc = [];
+      var head = null;
+      while (p.length > 1){
+        var rec = p.shift();
+        rec = rec.replace(/\"\,/gi,'";').replace(/\"|\'/gi,'').split(';');
+        if (head === null){
+          head = rec;
+          for (var i=0;i<head.length;i++){
+            head[i] = head[i].replace(/ /gi,'');
+          }
+        } else {
+          var tmp = {};
+          for (var j=0;j<rec.length;j++){
+            tmp[head[j]] = rec[j].replace(/\"|\'/gi,'');
+          }
+          proc.push(tmp);
+        }
+      }
+      callback(proc);
+    });
+  },
+
+  /**
+   * @method kill
+   * @member nodewindows
+   * Kill a specific process
+   * @param {Number} PID
+   * Process ID
+   * @param {Boolean} [force=false]
+   * Force close the process.
+   * @param {Function} [callback]
+   */
+  _kill: function(pid,force,callback){
+    if (!pid){
+      throw new Error('PID is required for the kill operation.');
+    }
+    callback = callback || function(){};
+    if (typeof force === 'function'){
+      callback = force;
+      force = false;
+    }
+    exec('taskkill /PID ' + pid + (force === true ? ' /f' : ''),callback);
   }
+
 };

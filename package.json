@@ -4,7 +4,6 @@
   "description": "Internet Explorer bindings for DalekJS",
   "homepage": "http://dalekjs.com",
   "main": "./index.js",
-  "os" : ["win32"],
   "repository": {
     "type": "git",
     "url": "http://github.com/dalekjs/dalek-browser-ie.git"
@@ -40,8 +39,7 @@
     "ncp": "~0.4.2",
     "npmconf": "~0.1.0",
     "rimraf": "~2.2.0",
-    "q": "~0.9.6",
-    "node-windows": "0.1.2"
+    "q": "~0.9.6"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -55,8 +53,5 @@
     "grunt-documantix": "~0.0.1",
     "blanket": "~1.1.5",
     "chai": "~1.7.0"
-  },
-  "peerDependencies": {
-    "dalekjs": "~0.0.1"
   }
 }
