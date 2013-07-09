@@ -21,13 +21,8 @@ var util = require('util');
 
 var libPath = path.join(__dirname, 'lib', 'bin', 'iedriver');
 var downloadUrl = 'http://selenium.googlecode.com/files/IEDriverServer_';
+downloadUrl += 'Win32_2.33.0.zip';
 
-if (process.platform === 'win32') {
-  downloadUrl += 'Win32_2.33.0.zip';
-} else {
-  console.log('Unexpected platform or architecture:', process.platform, process.arch);
-  process.exit(1);
-}
 
 var fileName = downloadUrl.split('/').pop();
 
