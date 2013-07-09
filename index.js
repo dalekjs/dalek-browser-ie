@@ -124,7 +124,7 @@ module.exports = {
   launch: function () {
     var deferred = Q.defer();
     var stream = '';
-    this.spawned = spawn(iedriver.path, ['--port=' + this.getPort(), '--host=' + this.getHost()]);
+    this.spawned = spawn(iedriver.path, ['--port=' + this.getPort()]);
 
     this.spawned.stdout.on('data', function (data) {
       var dataStr = data + '';
@@ -151,11 +151,12 @@ module.exports = {
         Object.keys(item).forEach(function (key) {
           if(svc[idx][key] === 'iexplore.exe') {
             // kill the browser process
+            console.log(svc[idx]);
             this._kill(svc[idx].PID);
           }
         }.bind(this));
-      });
-    },true);
+      }.bind(this));
+    }.bind(this),true);
 
     // kill the driver process
     this.spawned.kill('SIGTERM');
@@ -172,11 +173,19 @@ module.exports = {
    */
   _list: function(callback,verbose){
     verbose = typeof verbose === 'boolean' ? verbose : false;
-    exec('tasklist /FO CSV'+(verbose === true?' /V':''),function(err, stdout){
-      var p = stdout.split('\r\n');
+    exec('tasklist /FO CSV' + (verbose === true ? ' /V' : ''), function (err, stdout) {
+      var pi = stdout.split('\r\n');
+      var p = [];
+
+      pi.forEach(function (line) {
+        if (line.trim().length !== 0) {
+          p.push(line);
+        }
+      });
+
       var proc = [];
       var head = null;
-      while (p.length > 1){
+      while (p.length > 1) {
         var rec = p.shift();
         rec = rec.replace(/\"\,/gi,'";').replace(/\"|\'/gi,'').split(';');
         if (head === null){
