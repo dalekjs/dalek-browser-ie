@@ -45,7 +45,7 @@ var InternetExplorer = {
   /**
    * Verbose version of the browser name
    *
-   * @property
+   * @property longName
    * @type string
    * @default Internet Explorer
    */
@@ -57,7 +57,7 @@ var InternetExplorer = {
    * The port may change, cause the port conflict resultion
    * tool might pick another one, if the default one is blocked
    *
-   * @property
+   * @property port
    * @type integer
    * @default 5555
    */
@@ -69,7 +69,7 @@ var InternetExplorer = {
    * The host may be overriden with
    * a user configured value
    *
-   * @property
+   * @property host
    * @type string
    * @default localhost
    */
@@ -79,7 +79,7 @@ var InternetExplorer = {
   /**
    * Path to the IEDriverServer.exe file
    *
-   * @property
+   * @property path
    * @type string
    * @default /
    */
@@ -89,7 +89,7 @@ var InternetExplorer = {
   /**
    * Child process instance of the IEDriverServer
    *
-   * @property
+   * @property spawned
    * @type null|Object
    */
 
