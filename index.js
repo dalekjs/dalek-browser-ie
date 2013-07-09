@@ -33,10 +33,14 @@ var exec = require('child_process').exec;
 var iedriver = require('./lib/iedriver');
 
 /**
- * @module
+ * Native Webdriver base class
+ *
+ * @module DalekJS
+ * @class InternetExplorer
+ * @namespace Browser
  */
 
-module.exports = {
+var InternetExplorer = {
 
   /**
    * Verbose version of the browser name
@@ -95,7 +99,7 @@ module.exports = {
    * Resolves the driver port
    *
    * @method getPort
-   * @return integer
+   * @return {integer} port WebDriver server port
    */
 
   getPort: function () {
@@ -106,7 +110,7 @@ module.exports = {
    * Returns the driver host
    *
    * @method getHost
-   * @type string
+   * @return {string} host WebDriver server hostname
    */
 
   getHost: function () {
@@ -118,7 +122,7 @@ module.exports = {
    * (the driver takes care of launching the browser)
    *
    * @method launch
-   * @return Q.promise
+   * @return {object} promise Browser promise
    */
 
   launch: function () {
@@ -164,14 +168,16 @@ module.exports = {
   },
 
   /**
-   * @method list
-   * @member nodewindows
-   * List the processes running on the server.
-   * @param {Function} callback
-   * Receives the process object as the only callback argument
-   * @param {Boolean} [verbose=false]
+   * Lists all running processes (win only)
+   *
+   * @method _list
+   * @param {Function} callback Receives the process object as the only callback argument
+   * @param {Boolean} [verbose=false] Verbose output
+   * @chainable
+   * @private
    */
-  _list: function(callback,verbose){
+
+  _list: function(callback, verbose) {
     verbose = typeof verbose === 'boolean' ? verbose : false;
     exec('tasklist /FO CSV' + (verbose === true ? ' /V' : ''), function (err, stdout) {
       var pi = stdout.split('\r\n');
@@ -203,19 +209,22 @@ module.exports = {
       }
       callback(proc);
     });
+
+    return this;
   },
 
   /**
-   * @method kill
-   * @member nodewindows
-   * Kill a specific process
-   * @param {Number} PID
-   * Process ID
-   * @param {Boolean} [force=false]
-   * Force close the process.
-   * @param {Function} [callback]
+   * Kill a specific process (win only)
+   *
+   * @method _kill
+   * @param {Number} PID Process ID
+   * @param {Boolean} [force=false] Force close the process.
+   * @param {Function} [callback] Callback after process has been killed
+   * @chainable
+   * @private
    */
-  _kill: function(pid,force,callback){
+
+  _kill: function(pid, force, callback) {
     if (!pid){
       throw new Error('PID is required for the kill operation.');
     }
@@ -225,6 +234,10 @@ module.exports = {
       force = false;
     }
     exec('taskkill /PID ' + pid + (force === true ? ' /f' : ''),callback);
+    return this;
   }
 
 };
+
+// expose the module
+module.exports = InternetExplorer;
