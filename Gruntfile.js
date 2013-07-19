@@ -1,4 +1,4 @@
-
+module.exports = function(grunt) {
   'use strict';
 
   grunt.initConfig({
@@ -172,4 +172,5 @@
   grunt.registerTask('test', ['clean:coverage', 'prepareCoverage', 'lint', 'mochaTest', 'complexity']);
   grunt.registerTask('docs', ['clean:reportZip', 'clean:report', 'preparePlato', 'plato', 'documantix', 'yuidoc', 'compress']);
   grunt.registerTask('all', ['clean', 'test', 'docs']);
+
 };
