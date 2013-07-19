@@ -38,6 +38,8 @@ var iedriver = require('./lib/iedriver');
  * @module DalekJS
  * @class InternetExplorer
  * @namespace Browser
+ * @part InternetExplorer
+ * @api
  */
 
 var InternetExplorer = {
@@ -48,6 +50,7 @@ var InternetExplorer = {
    * @property longName
    * @type string
    * @default Internet Explorer
+   * @api
    */
 
   longName: 'Internet Explorer',
