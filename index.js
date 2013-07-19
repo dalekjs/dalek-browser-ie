@@ -33,7 +33,7 @@ var exec = require('child_process').exec;
 var iedriver = require('./lib/iedriver');
 
 /**
- * Native Webdriver base class
+ * Internet Explorer Driver base class
  *
  * @module DalekJS
  * @class InternetExplorer
