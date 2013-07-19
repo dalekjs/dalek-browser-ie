@@ -8,7 +8,7 @@ dalek-browser-ie
 [![Dependency Status](https://david-dm.org/dalekjs/dalek-browser-ie.png)](https://david-dm.org/dalekjs/dalek-browser-ie)
 [![devDependency Status](https://david-dm.org/dalekjs/dalek-browser-ie/dev-status.png)](https://david-dm.org/dalekjs/dalek-browser-ie#info=devDependencies)
 [![NPM version](https://badge.fury.io/js/dalek-browser-ie.png)](http://badge.fury.io/js/dalek-browser-ie)
-[![Coverage](http://dalekjs.github.io/dalekjs.com/package/dalek-browser-ie/master/coverage/coverage.png)](http://dalekjs.github.io/dalekjs.com/package/dalek-browser-ie/master/coverage/index.html)
+[![Coverage](http://dalekjs.github.io/dalekjs.com/package/dalek-browser-ie/master/coverage/coverage.png)](http://dalekjs.com/package/dalek-browser-ie/master/coverage/index.html)
 [![unstable](https://rawgithub.com/hughsk/stability-badges/master/dist/unstable.svg)](http://github.com/hughsk/stability-badges)
 
 [![NPM](https://nodei.co/npm/dalek-browser-ie.png)](https://nodei.co/npm/dalek-browser-ie/)
@@ -24,7 +24,7 @@ It provides all a WebDriverServer & browser launcher for Internet Explorer, used
 [Code coverage](http://dalekjs.com/package/dalek-browser-ie/master/coverage/index.html) -
 [Code complexity](http://dalekjs.com/package/dalek-browser-ie/master/complexity/index.html) -
 [Contributing](https://github.com/dalekjs/dalek-browser-ie/blob/master/CONTRIBUTING.md) -
-[User Docs](http://dalekjs.com/docs/master/browser/ie.html) -
+[User Docs](http://dalekjs.com/docs/internetexplorer.html) -
 [Homepage](http://dalekjs.com) -
 [Twitter](http://twitter.com/dalekjs)
 
