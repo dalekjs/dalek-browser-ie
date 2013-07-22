@@ -20,7 +20,8 @@ It provides all a WebDriverServer & browser launcher for Internet Explorer, used
 
 ## Ressources
 
-[API Documentation](http://dalekjs.com/package/dalek-browser-ie/master/api/index.html) -
+[API Docs](http://dalekjs.com/package/dalek-browser-ie/master/api/index.html) -
+[Trello](https://trello.com/b/JmwfjVHo/dalek-browser-ie) -
 [Code coverage](http://dalekjs.com/package/dalek-browser-ie/master/coverage/index.html) -
 [Code complexity](http://dalekjs.com/package/dalek-browser-ie/master/complexity/index.html) -
 [Contributing](https://github.com/dalekjs/dalek-browser-ie/blob/master/CONTRIBUTING.md) -
