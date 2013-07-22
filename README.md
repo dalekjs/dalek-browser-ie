@@ -8,7 +8,7 @@ dalek-browser-ie
 [![Dependency Status](https://david-dm.org/dalekjs/dalek-browser-ie.png)](https://david-dm.org/dalekjs/dalek-browser-ie)
 [![devDependency Status](https://david-dm.org/dalekjs/dalek-browser-ie/dev-status.png)](https://david-dm.org/dalekjs/dalek-browser-ie#info=devDependencies)
 [![NPM version](https://badge.fury.io/js/dalek-browser-ie.png)](http://badge.fury.io/js/dalek-browser-ie)
-[![Coverage](http://dalekjs.github.io/dalekjs.com/package/dalek-browser-ie/master/coverage/coverage.png)](http://dalekjs.com/package/dalek-browser-ie/master/coverage/index.html)
+[![Coverage](http://dalekjs.com/package/dalek-browser-ie/master/coverage/coverage.png)](http://dalekjs.com/package/dalek-browser-ie/master/coverage/index.html)
 [![unstable](https://rawgithub.com/hughsk/stability-badges/master/dist/unstable.svg)](http://github.com/hughsk/stability-badges)
 
 [![NPM](https://nodei.co/npm/dalek-browser-ie.png)](https://nodei.co/npm/dalek-browser-ie/)
