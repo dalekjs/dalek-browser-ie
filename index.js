@@ -38,19 +38,19 @@ var iedriver = require('./lib/iedriver');
  *
  * The browser plugin can be installed with the following command:
  *
- * ```
+ * ```bash
  * $ npm install dalek-browser-ie --save-dev
  * ```
  *
  * You can use the browser plugin by adding a config option to the your Dalekfile
  *
- * ```js
+ * ```javascript
  * "browsers": ["IE"]
  * ```
  *
  * Or you can tell Dalek that it should test in this browser via the command line:
  *
- * ```
+ * ```bash
  * $ dalek mytest.js -b IE
  * ```
  *
