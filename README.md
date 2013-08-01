@@ -1,5 +1,5 @@
 dalek-browser-ie
-=====================
+================
 
 > DalekJS browser plugin for Internet Explorer
 
@@ -12,11 +12,7 @@ dalek-browser-ie
 [![unstable](https://rawgithub.com/hughsk/stability-badges/master/dist/unstable.svg)](http://github.com/hughsk/stability-badges)
 
 [![NPM](https://nodei.co/npm/dalek-browser-ie.png)](https://nodei.co/npm/dalek-browser-ie/)
-
-## Warning
-
-This module is a browser plugin for [DalekJS](//github.com/dalekjs/dalek).
-It provides all a WebDriverServer & browser launcher for Internet Explorer, used by DalekJS.
+[![NPM](https://nodei.co/npm-dl/dalek-browser-ie.png)](https://nodei.co/npm/dalek-browser-ie/)
 
 ## Ressources
 
@@ -28,6 +24,29 @@ It provides all a WebDriverServer & browser launcher for Internet Explorer, used
 [User Docs](http://dalekjs.com/docs/internetexplorer.html) -
 [Homepage](http://dalekjs.com) -
 [Twitter](http://twitter.com/dalekjs)
+
+## Docs
+
+This module is a browser plugin for [DalekJS](//github.com/dalekjs/dalek).
+It provides all a WebDriverServer & browser launcher for Internet Explorer.
+
+The browser plugin can be installed with the following command:
+
+```
+$ npm install dalek-browser-ie --save-dev
+```
+
+You can use the browser plugin by adding a config option to the your Dalekfile
+
+```js
+"browsers": ["IE"]
+```
+
+Or you can tell Dalek that it should test in this browser via the command line:
+
+```
+$ dalek mytest.js -b IE
+```
 
 ## Help Is Just A Click Away
 
