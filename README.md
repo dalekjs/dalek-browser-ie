@@ -14,7 +14,7 @@ dalek-browser-ie
 [![NPM](https://nodei.co/npm/dalek-browser-ie.png)](https://nodei.co/npm/dalek-browser-ie/)
 [![NPM](https://nodei.co/npm-dl/dalek-browser-ie.png)](https://nodei.co/npm/dalek-browser-ie/)
 
-## Ressources
+## Resources
 
 [API Docs](http://dalekjs.com/package/dalek-browser-ie/master/api/index.html) -
 [Trello](https://trello.com/b/JmwfjVHo/dalek-browser-ie) -
