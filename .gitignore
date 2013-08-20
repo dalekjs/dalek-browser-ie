@@ -13,6 +13,7 @@ results
 
 npm-debug.log
 report.zip
+package-canary.json
 
 /coverage/
 /node_modules/
