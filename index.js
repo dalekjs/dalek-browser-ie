@@ -26,8 +26,8 @@
 
 // ext. libs
 var Q = require('q');
-var spawn = require('child_process').spawn;
-var exec = require('child_process').exec;
+var cp = require('child_process');
+var portscanner = require('portscanner');
 
 // int. libs
 var iedriver = require('./lib/iedriver');
@@ -54,6 +54,28 @@ var iedriver = require('./lib/iedriver');
  * $ dalek mytest.js -b IE
  * ```
  *
+ * The Webdriver Server tries to open Port 5555 by default,
+ * if this port is blocked, it tries to use a port between 5555 & 5564
+ * You can specifiy a different port from within your [Dalekfile](/pages/config.html) like so:
+ *
+ * ```javascript
+ * "browsers": {
+ *   "ie": {
+ *     "port": 6555 
+ *   }
+ * }
+ * ```
+ *
+ * It is also possible to specify a range of ports:
+ *
+ * ```javascript
+ * "browsers": {
+ *   "ie": {
+ *     "portRange": [6100, 6120] 
+ *   }
+ * }
+ * ```
+ * 
  * @module DalekJS
  * @class InternetExplorer
  * @namespace Browser
@@ -87,8 +109,20 @@ var InternetExplorer = {
   port: 5555,
 
   /**
+   * Default maximum port of the IEDriverServer
+   * The port is the highest port in the range that can be allocated
+   * by the IEDriverServer
+   *
+   * @property maxPort
+   * @type integer
+   * @default 5654
+   */
+
+  maxPort: 5654,
+
+  /**
    * Default host of the IEDriverServer
-   * The host may be overriden with
+   * The host may be overridden with
    * a user configured value
    *
    * @property host
@@ -97,6 +131,31 @@ var InternetExplorer = {
    */
 
   host: 'localhost',
+
+  /**
+   * Default desired capabilities that should be
+   * transferred when the browser session gets requested
+   *
+   * @property desiredCapabilities
+   * @type object
+   */
+
+  desiredCapabilities: {
+    browserName: 'InternetExplorer'
+  },
+
+  /**
+   * Driver defaults, what should the driver be able to access.
+   *
+   * @property driverDefaults
+   * @type object
+   */
+
+  driverDefaults: {
+    viewport: true,
+    status: true,
+    sessionInfo: true
+  },
 
   /**
    * Path to the IEDriverServer.exe file
@@ -116,6 +175,17 @@ var InternetExplorer = {
    */
 
   spawned: null,
+
+  /**
+   * IE processes that are running on startup,
+   * and therefor shouldn`t be closed
+   *
+   * @property openProcesses
+   * @type array
+   * @default []   
+   */
+
+  openProcesses: [],
 
   /**
    * Resolves the driver port
@@ -140,6 +210,17 @@ var InternetExplorer = {
   },
 
   /**
+   * Resolves the maximum range for the driver port
+   *
+   * @method getMaxPort
+   * @return {integer} port Max WebDriver server port range
+   */
+
+  getMaxPort: function () {
+    return this.maxPort;
+  },
+
+  /**
    * Launches the driver
    * (the driver takes care of launching the browser)
    *
@@ -147,18 +228,22 @@ var InternetExplorer = {
    * @return {object} promise Browser promise
    */
 
-  launch: function () {
+  launch: function (configuration, events, config) {
     var deferred = Q.defer();
-    var stream = '';
-    this.spawned = spawn(iedriver.path, ['--port=' + this.getPort()]);
 
-    this.spawned.stdout.on('data', function (data) {
-      var dataStr = data + '';
-      stream += dataStr;
-      if (stream.search('Listening on port') !== -1) {
-        deferred.resolve();
-      }
-    });
+    // store injected configuration/log event handlers
+    this.reporterEvents = events;
+    this.configuration = configuration;
+    this.config = config;
+
+    // check for a user set port
+    var browsers = this.config.get('browsers');
+    if (browsers && Array.isArray(browsers)) {
+      browsers.forEach(this._checkUserDefinedPorts.bind(this));
+    }
+
+    // check if the current port is in use, if so, scan for free ports
+    portscanner.findAPortNotInUse(this.getPort(), this.getMaxPort(), this.getHost(), this._checkPorts.bind(this, deferred));
     return deferred.promise;
   },
 
@@ -177,7 +262,6 @@ var InternetExplorer = {
         Object.keys(item).forEach(function (key) {
           if(svc[idx][key] === 'iexplore.exe') {
             // kill the browser process
-            console.log(svc[idx]);
             this._kill(svc[idx].PID);
           }
         }.bind(this));
@@ -186,6 +270,59 @@ var InternetExplorer = {
 
     // kill the driver process
     this.spawned.kill('SIGTERM');
+    return this;
+  },
+
+  _checkPorts: function (deferred, err, port) {
+    // check if the port was blocked & if we need to switch to another port
+    if (this.port !== port) {
+      this.reporterEvents.emit('report:log:system', 'dalek-browser-ie: Switching to port: ' + port);
+      this.port = port;
+    }
+
+    // invoke the ie driver afterwards
+    this._startIEdriver(deferred);
+    return this;
+  },
+
+  _startIEdriver: function (deferred) {
+    var stream = '';
+    this.spawned = cp.spawn(iedriver.path, ['--port=' + this.getPort()]);
+
+    this.spawned.stdout.on('data', function (data) {
+      var dataStr = data + '';
+      stream += dataStr;
+      if (stream.search('Listening on port') !== -1) {
+        deferred.resolve();
+      }
+    });
+    return this;
+  },
+
+  /**
+   * Process user defined ports
+   *
+   * @method _checkUserDefinedPorts
+   * @param {object} browser Browser configuration
+   * @chainable
+   * @private
+   */
+
+  _checkUserDefinedPorts: function (browser) {
+    // check for a single defined port
+    if (browser.ie && browser.ie.port) {
+      this.port = parseInt(browser.ie.port, 10);
+      this.maxPort = this.port + 90;
+      this.reporterEvents.emit('report:log:system', 'dalek-browser-ie: Switching to user defined port: ' + this.port);
+    }
+
+    // check for a port range
+    if (browser.ie && browser.ie.portRange && browser.ie.portRange.length === 2) {
+      this.port = parseInt(browser.ie.portRange[0], 10);
+      this.maxPort = parseInt(browser.ie.portRange[1], 10);
+      this.reporterEvents.emit('report:log:system', 'dalek-browser-ie: Switching to user defined port(s): ' + this.port + ' -> ' + this.maxPort);
+    }
+
     return this;
   },
 
@@ -201,7 +338,7 @@ var InternetExplorer = {
 
   _list: function(callback, verbose) {
     verbose = typeof verbose === 'boolean' ? verbose : false;
-    exec('tasklist /FO CSV' + (verbose === true ? ' /V' : ''), function (err, stdout) {
+    cp.exec('tasklist /FO CSV' + (verbose === true ? ' /V' : ''), function (err, stdout) {
       var pi = stdout.split('\r\n');
       var p = [];
 
@@ -255,7 +392,7 @@ var InternetExplorer = {
       callback = force;
       force = false;
     }
-    exec('taskkill /PID ' + pid + (force === true ? ' /f' : ''),callback);
+    cp.exec('taskkill /PID ' + pid + (force === true ? ' /f' : ''),callback);
     return this;
   }
 
