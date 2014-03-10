@@ -21,7 +21,12 @@ var util = require('util');
 
 var libPath = path.join(__dirname, 'lib', 'bin', 'iedriver');
 var downloadUrl = 'http://selenium.googlecode.com/files/IEDriverServer_';
-downloadUrl += 'Win32_2.33.0.zip';
+
+if (process.arch === 'x64') {
+  downloadUrl += 'Win32_2.39.0.zip';
+} else {
+  downloadUrl += 'x64_2.39.0.zip';
+}
 
 
 var fileName = downloadUrl.split('/').pop();
