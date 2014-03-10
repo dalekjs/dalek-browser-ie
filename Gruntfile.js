@@ -121,7 +121,7 @@ module.exports = function (grunt) {
     // archives the docs if a new version appears
     archive: {
       options: {
-        file: 'ie.html'
+        file: 'internetexplorer.html'
       }
     }
 
