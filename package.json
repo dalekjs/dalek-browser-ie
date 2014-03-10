@@ -53,12 +53,15 @@
     "grunt-plato": "~1.0.0",
     "grunt-documantix": "~0.0.4",
     "grunt-include-replace": "~1.2.0",
+    "grunt-git-contributors": "~0.1.5",
     "grunt-conventional-changelog": "~1.1.0",
     "grunt-concurrent": "~0.5.0",
     "grunt-bump": "~0.0.13",
     "load-grunt-tasks": "~0.4.0",
+    "dalek-build-tools": "~0.0.2",
     "time-grunt": "~0.2.10",
     "blanket": "~1.1.6",
-    "chai": "~1.9.0"
+    "chai": "~1.9.0",
+    "grunt-notify": "~0.2.18"
   }
 }
