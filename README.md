@@ -10,6 +10,10 @@ dalek-browser-ie
 [![NPM version](https://badge.fury.io/js/dalek-browser-ie.png)](http://badge.fury.io/js/dalek-browser-ie)
 [![Coverage](http://dalekjs.com/package/dalek-browser-ie/master/coverage/coverage.png)](http://dalekjs.com/package/dalek-browser-ie/master/coverage/index.html)
 [![unstable](https://rawgithub.com/hughsk/stability-badges/master/dist/unstable.svg)](http://github.com/hughsk/stability-badges)
+[![Stories in Ready](https://badge.waffle.io/dalekjs/dalek-browser-ie.png?label=ready)](https://waffle.io/dalekjs/dalek-browser-ie)
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/dalekjs/dalek-browser-ie/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+
 
 [![NPM](https://nodei.co/npm/dalek-browser-ie.png)](https://nodei.co/npm/dalek-browser-ie/)
 [![NPM](https://nodei.co/npm-dl/dalek-browser-ie.png)](https://nodei.co/npm/dalek-browser-ie/)
@@ -88,8 +92,3 @@ Google Groups mailing list.
 Copyright (c) 2013 Sebastian Golasch
 
 Distributed under [MIT license](https://github.com/dalekjs/dalek-browser-ie/blob/master/LICENSE-MIT)
-
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/dalekjs/dalek-browser-ie/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
