@@ -20,12 +20,12 @@ var npmconf = require('npmconf');
 var util = require('util');
 
 var libPath = path.join(__dirname, 'lib', 'bin', 'iedriver');
-var downloadUrl = 'http://selenium.googlecode.com/files/IEDriverServer_';
+var downloadUrl = 'http://selenium-release.storage.googleapis.com/2.40/IEDriverServer_';
 
 if (process.arch === 'x64') {
-  downloadUrl += 'x64_2.39.0.zip';
+  downloadUrl += 'x64_2.40.0.zip';
 } else {
-  downloadUrl += 'Win32_2.39.0.zip';
+  downloadUrl += 'Win32_2.40.0.zip';
 }
 
 
