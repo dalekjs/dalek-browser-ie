@@ -23,9 +23,9 @@ var libPath = path.join(__dirname, 'lib', 'bin', 'iedriver');
 var downloadUrl = 'http://selenium.googlecode.com/files/IEDriverServer_';
 
 if (process.arch === 'x64') {
-  downloadUrl += 'Win32_2.39.0.zip';
-} else {
   downloadUrl += 'x64_2.39.0.zip';
+} else {
+  downloadUrl += 'Win32_2.39.0.zip';
 }
 
 
