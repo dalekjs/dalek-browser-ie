@@ -1,6 +1,6 @@
 {
   "name": "dalek-browser-ie",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Internet Explorer bindings for DalekJS",
   "homepage": "http://dalekjs.com",
   "main": "./index.js",
