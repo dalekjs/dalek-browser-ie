@@ -55,7 +55,7 @@ $ dalek mytest.js -b IE
 ## FAQ / Troubleshooting
 ### Internet Explorer does not launch and the test hangs (possibly only on 64-Bit-Systems) ###
 In order to drive IE the setting "Enable Protected Mode" (in IE's Security tab) must be set to the same value for ALL zones. If it is on for some zones and off for others, remote driving will not work.
-[Stackoverflow](http://stackoverflow.com/questions/19146162/dalekjs-internet-explorer-does-not-launch-and-the-test-hangs=
+[Stackoverflow](http://stackoverflow.com/questions/19146162/dalekjs-internet-explorer-does-not-launch-and-the-test-hangs=)
 
 ## Help Is Just A Click Away
 
