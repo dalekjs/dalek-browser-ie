@@ -262,7 +262,7 @@ var InternetExplorer = {
         Object.keys(item).forEach(function (key) {
           if(svc[idx][key] === 'iexplore.exe') {
             // kill the browser process
-            this._kill(svc[idx].PID);
+            this._kill(svc[idx].PID, true);
           }
         }.bind(this));
       }.bind(this));
@@ -358,6 +358,10 @@ var InternetExplorer = {
           for (var i=0;i<head.length;i++){
             head[i] = head[i].replace(/ /gi,'');
           }
+
+          if (head.indexOf('PID')<0){
+            head[1] = 'PID';
+          }
         } else {
           var tmp = {};
           for (var j=0;j<rec.length;j++){
@@ -384,7 +388,7 @@ var InternetExplorer = {
    */
 
   _kill: function(pid, force, callback) {
-    if (!pid){
+    if (!pid || isNaN(parseInt(pid))){
       throw new Error('PID is required for the kill operation.');
     }
     callback = callback || function(){};
