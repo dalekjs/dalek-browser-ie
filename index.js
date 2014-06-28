@@ -359,7 +359,9 @@ var InternetExplorer = {
             head[i] = head[i].replace(/ /gi,'');
           }
 
-          if (head.indexOf('PID')<0) head[1] = 'PID'
+          if (head.indexOf('PID')<0){
+            head[1] = 'PID';
+          }
         } else {
           var tmp = {};
           for (var j=0;j<rec.length;j++){
