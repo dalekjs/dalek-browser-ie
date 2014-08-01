@@ -141,7 +141,8 @@ var InternetExplorer = {
    */
 
   desiredCapabilities: {
-    browserName: 'InternetExplorer'
+    browserName: 'InternetExplorer',
+    initialBrowserUrl: ''
   },
 
   /**
